@@ -1,0 +1,54 @@
+[project]
+name = "razorpay-finance-controller"
+version = "0.1.0"
+description = "AI-powered reconciliation and finance controller for Razorpay merchants"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Aditya Singh Thakur", email = "aditya.st.dev@razorpay-buildathon.local" },
+]
+keywords = ["razorpay", "reconciliation", "finance", "gst", "cash-flow"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["core", "tests", "data", "app.py"]
+
+[tool.ruff.lint]
+# A pragmatic default set: pycodestyle (E/W), pyflakes (F), isort (I),
+# bugbear (B), and the comprehensions check (C4).
+select = ["E", "W", "F", "I", "B", "C4", "UP"]
+ignore = [
+    "E501",  # line length is handled by the formatter
+    "B008",  # function-call-in-default-arg is intentional in some DI patterns
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["core", "data", "tests"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.black]
+line-length = 100
+target-version = ["py311", "py312"]
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+    \.git
+  | \.venv
+  | build
+  | dist
+  | data/synthetic
+)/
+'''
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

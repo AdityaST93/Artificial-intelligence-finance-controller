@@ -1,0 +1,78 @@
+{
+  "assertions": {
+    "precision_above_0.90": true,
+    "recall_above_0.85": true
+  },
+  "confusion_matrix": {
+    "amount_mismatch": {
+      "amount_mismatch": 10
+    },
+    "cancelled_order_with_payment": {
+      "cancelled_order_with_payment": 8
+    },
+    "ghost_oms_order": {
+      "ghost_oms_order": 2
+    },
+    "gst_amount_mismatch": {
+      "gst_amount_mismatch": 8
+    },
+    "missing_bank_credit": {
+      "missing_bank_credit": 5,
+      "orphan_bank_credit": 1
+    },
+    "missing_gst_invoice": {
+      "missing_gst_invoice": 4
+    },
+    "missing_oms_order": {
+      "missing_oms_order": 4
+    },
+    "oms_amount_mismatch": {
+      "oms_amount_mismatch": 10
+    },
+    "orphan_bank_credit": {
+      "orphan_bank_credit": 3
+    }
+  },
+  "generated_at": "2026-09-03T18:02:41.732908Z",
+  "metrics": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "tn": 258,
+    "tp": 55
+  },
+  "reconciliation_metrics": {
+    "bank_credits": 79,
+    "clean_payments": 49,
+    "exception_categories": {
+      "amount_mismatch": 5,
+      "cancelled_order_with_payment": 4,
+      "ghost_oms_order": 2,
+      "gst_amount_mismatch": 4,
+      "missing_bank_credit": 5,
+      "missing_gst_invoice": 4,
+      "missing_oms_order": 4,
+      "oms_amount_mismatch": 5,
+      "orphan_bank_credit": 4
+    },
+    "gst_invoices": 76,
+    "match_rate": 0.6125,
+    "oms_orders": 78,
+    "razorpay_payments": 80,
+    "tier1_exceptions": 37,
+    "tier1_match_attempts": 227,
+    "tier1_matched_payments": 80,
+    "total_input_records": 313
+  },
+  "thresholds": {
+    "precision": 0.9,
+    "recall": 0.85
+  },
+  "totals": {
+    "exceptions_ground_truth": 55,
+    "exceptions_predicted": 55,
+    "records": 313
+  }
+}
