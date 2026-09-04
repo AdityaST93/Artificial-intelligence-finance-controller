@@ -303,14 +303,11 @@ def render_forecast(forecast: Any = None) -> None:
         f"Row per week for the {f.weeks}-week horizon.",
     )
 
-    try:
-        table_df = f.df.copy()
-        # Pretty formatting if numeric
-        for col in ["opening", "inflow", "outflow", "net", "closing"]:
-            if col in table_df.columns:
-                table_df[col] = table_df[col].apply(
-                    lambda v: f"Rs {float(v):,.2f}" if pd.notna(v) else "—"
-                )
-        st.dataframe(table_df, use_container_width=True, hide_index=True, height=420)
-    except Exception as e:
-        st.warning(f"Could not render weekly details: {e}")
+    table_df = f.df.copy()
+    # Pretty formatting if numeric
+    for col in ["opening", "inflow", "outflow", "net", "closing"]:
+        if col in table_df.columns:
+            table_df[col] = table_df[col].apply(
+                lambda v: f"Rs {float(v):,.2f}" if pd.notna(v) else "—"
+            )
+    st.dataframe(table_df, use_container_width=True, hide_index=True, height=420)
