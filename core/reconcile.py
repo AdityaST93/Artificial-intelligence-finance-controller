@@ -58,13 +58,53 @@ def load_sources(data_dir: Path | str | None = None) -> dict[str, pd.DataFrame]:
 
     Passing a custom directory lets the adversarial holdout test point the
     engine at data/holdout/ without touching the main set.
+
+    If the CSVs are missing (e.g. fresh deploy without generated data), this
+    will auto-generate them via the synthetic data generator so the app
+    always has something to reconcile.
     """
     base = Path(data_dir) if data_dir is not None else DATA_DIR
+    base.mkdir(parents=True, exist_ok=True)
+
+    required = {
+        "razorpay": base / "razorpay_settlement.csv",
+        "bank": base / "bank_statement.csv",
+        "oms": base / "oms_orders.csv",
+        "gst": base / "gst_invoices.csv",
+    }
+
+    # If any file is missing, auto-generate the full set
+    if not all(p.exists() for p in required.values()):
+        try:
+            from data.generate import (
+                generate_razorpay_settlement,
+                generate_bank_statement,
+                generate_oms_orders,
+                generate_gst_invoices,
+            )
+            rzp = generate_razorpay_settlement()
+            bank = generate_bank_statement(rzp)
+            oms = generate_oms_orders(rzp)
+            gst = generate_gst_invoices(rzp)
+            rzp.to_csv(required["razorpay"], index=False)
+            bank.to_csv(required["bank"], index=False)
+            oms.to_csv(required["oms"], index=False)
+            gst.to_csv(required["gst"], index=False)
+            logger.info("Auto-generated synthetic data at %s", base)
+        except ImportError as e:
+            # If we can't auto-generate, give a clear error
+            missing = [str(p) for p in required.values() if not p.exists()]
+            raise FileNotFoundError(
+                f"Source CSVs missing and auto-generation failed: {e}. "
+                f"Run `python data/generate.py` to create them, or ensure "
+                f"these files exist: {missing}"
+            ) from e
+
     return {
-        "razorpay": pd.read_csv(base / "razorpay_settlement.csv"),
-        "bank": pd.read_csv(base / "bank_statement.csv"),
-        "oms": pd.read_csv(base / "oms_orders.csv"),
-        "gst": pd.read_csv(base / "gst_invoices.csv"),
+        "razorpay": pd.read_csv(required["razorpay"]),
+        "bank": pd.read_csv(required["bank"]),
+        "oms": pd.read_csv(required["oms"]),
+        "gst": pd.read_csv(required["gst"]),
     }
 
 
