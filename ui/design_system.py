@@ -1,4 +1,4 @@
-"""
+   """
 Razorpay-inspired production design system for Streamlit.
 
 Public surface:
@@ -768,7 +768,7 @@ def kpi_card(
     tone: str = "default",
     *,
     sparkline: list[float] | None = None,
-    animate: bool = True,
+    animate: bool = False,
 ) -> str:
     """Render a glassmorphic KPI card as an HTML string.
 
@@ -1049,4 +1049,3 @@ def inject() -> None:
     """
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
     st.markdown(COUNTER_RUNTIME, unsafe_allow_html=True)
-
