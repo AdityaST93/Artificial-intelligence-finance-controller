@@ -140,6 +140,19 @@ CUSTOM_CSS: str = r"""
   #MainMenu, footer, header [data-testid="stToolbar"] { visibility: hidden; }
   [data-testid="stDecoration"] { display: none; }
 
+  /* Ensure the sidebar collapse/expand arrow always stays visible + on top */
+  [data-testid="collapsedControl"] {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 999999 !important;
+    position: relative !important;
+  }
+  header[data-testid="stHeader"] {
+    visibility: visible !important;
+    z-index: 999998 !important;
+  }
+
   /* ---------- 3. Custom scrollbar ---------- */
   *::-webkit-scrollbar { width: 10px; height: 10px; }
   *::-webkit-scrollbar-track {
@@ -1036,3 +1049,4 @@ def inject() -> None:
     """
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
     st.markdown(COUNTER_RUNTIME, unsafe_allow_html=True)
+
