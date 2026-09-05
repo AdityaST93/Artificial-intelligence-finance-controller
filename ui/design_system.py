@@ -1,4 +1,4 @@
-   """
+"""
 Razorpay-inspired production design system for Streamlit.
 
 Public surface:
