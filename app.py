@@ -1,5 +1,28 @@
 """
-",
+Razorpay AI Finance Controller - Streamlit entry point.
+
+Razorpay-inspired design system, modular page architecture:
+  - 8 pages: Dashboard, Reconciliation, Forecast, GST, Q&A, Exceptions, Audit, Settings
+"""
+import os
+import sys
+import tempfile
+from decimal import Decimal
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent))
+
+import streamlit as st
+
+# ============================================================================
+# Page config (must be first)
+# ============================================================================
+
+st.set_page_config(
+    page_title="Razorpay AI Finance Controller",
+    page_icon="💠",
+    layout="wide",
+    initial_sidebar_state="expanded",
     menu_items={
         "About": "Built for Razorpay AI Buildathon · Track 4 (AI Finance Controller) · by Aditya Singh Thakur · 2026",
         "Get Help": "https://github.com/AdityaST93/Artificial-intelligence-finance-controller",
@@ -121,7 +144,9 @@ else:
     with st.expander("📥  Download reconciliation report", expanded=False):
         c1, c2, c3 = st.columns([1, 1, 2])
         with c1:
-            excel_bytes = export_excel(result).getvalue()
+            with tempfile.NamedTemporaryFile(suffix=".xlsx", delete=False) as tmp:
+                export_excel(result, tmp.name)
+                excel_bytes = Path(tmp.name).read_bytes()
             st.download_button(
                 "📊  Download Excel",
                 data=excel_bytes,
@@ -130,7 +155,9 @@ else:
                 use_container_width=True,
             )
         with c2:
-            pdf_bytes = export_pdf_report(result).getvalue()
+            with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
+                export_pdf_report(result, tmp.name)
+                pdf_bytes = Path(tmp.name).read_bytes()
             st.download_button(
                 "📄  Download PDF",
                 data=pdf_bytes,
@@ -174,4 +201,3 @@ else:
 # ============================================================================
 
 footer()
-
