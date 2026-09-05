@@ -1,27 +1,5 @@
 """
-Razorpay AI Finance Controller - Streamlit entry point.
-
-Razorpay-inspired design system, modular page architecture:
-  - 8 pages: Dashboard, Reconciliation, Forecast, GST, Q&A, Exceptions, Audit, Settings
-"""
-import os
-import sys
-from decimal import Decimal
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).parent))
-
-import streamlit as st
-
-# ============================================================================
-# Page config (must be first)
-# ============================================================================
-
-st.set_page_config(
-    page_title="Razorpay AI Finance Controller",
-    page_icon="💠",
-    layout="wide",
-    initial_sidebar_state="expanded",
+",
     menu_items={
         "About": "Built for Razorpay AI Buildathon · Track 4 (AI Finance Controller) · by Aditya Singh Thakur · 2026",
         "Get Help": "https://github.com/AdityaST93/Artificial-intelligence-finance-controller",
@@ -196,3 +174,4 @@ else:
 # ============================================================================
 
 footer()
+
